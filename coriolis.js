@@ -3,7 +3,7 @@
 tool.minDistance = 10;
 
 var myCircle = new Path.Circle(new Point(600, 300), 300);
-myCircle.fillColor = 'greenish';
+myCircle.fillColor = 'green';
 
 var path;
 
@@ -44,7 +44,7 @@ function onFrame(event) {
 
     //console.log("RGL: " + rainfall_path.length);
 
-    path_group.rotate(.1);
+    path_group.rotate(.3);
 
 
 
