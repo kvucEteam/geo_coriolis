@@ -8,23 +8,28 @@
     <meta name="author" content="ato">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="../library/css/styles.css" type="text/css">
-    <link rel="stylesheet" href="coriolis.css" type="text/css">
+    <link rel="stylesheet" href="test_paper.css" type="text/css">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="col-xs-12 overlay_container">
-         
-                <canvas id="myCanvas">
-                    
-                </canvas>
+            <h1 id="header"></h1>
+            <div id="instruction"></div>
+            <div id="explanation"></div>
+            
+            <canvas id="testCanvas"> 
+                
+            </canvas>
 
         </div>
     </div>
     <script src="../library/vendor_scripts.js"></script>
     <script src="../library/custom_scripts.js"></script>
     
-    <script type="text/paperscript" src="coriolis.js" canvas="myCanvas">
+    <script type="text/javascript" src="dist/paper-full.js"></script>
+    
+    <script type="text/paperscript" src="test_paper.js" canvas="testCanvas">
         
     </script>
     <script type="text/javascript">
