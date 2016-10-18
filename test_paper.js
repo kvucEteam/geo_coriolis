@@ -32,6 +32,8 @@ var cObj = {};
 
 var group = new Group();
 
+var svg_group = new Group();
+
 
 // #########################################   TEST   #########################################
 console.log('importSVG - project 1: '+ JSON.stringify(project));
@@ -42,8 +44,8 @@ console.log('importSVG - project 1: '+ JSON.stringify(project));
 // console.log("a 2: " + a);
 // var a = new Raster("img/yin_yang.svg");  // VIRKER OK, men det behandles som .jpg, .png mm
 // console.log("a 3: " + a);
-var a = new Symbol(project.importSVG("img/yin_yang.svg")); 
-console.log("a 4: " + a);
+//var a = new Symbol(project.importSVG("img/yin_yang.svg")); 
+//console.log("a 4: " + a);
 console.log('importSVG - project 2: '+ JSON.stringify(project)); 
 
 // var p = a.place();
@@ -67,7 +69,23 @@ var myCircle = new Path.Circle(new Point(view.center), 300);
 myCircle.fillColor = 'green';
 group.addChild(myCircle);
 
-group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
+
+
+
+//group.children[0].remove();
+svg_group.scale = .3;
+
+
+svg_group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
+console.log("SVG_POS: " + svg_group.position.x)
+group.addChild(svg_group);
+
+console.log("SVG_POS: " + svg_group.position.x)
+
+console.log(group.children[0]);
+console.log(project.activeLayer.children[0]);
+//group.children[0].remove();
+//console.log(group.children["svg2"]);
 // var TmyCircle = new Path.importSVG("img/yin_yang.svg");  // VIRKER IKKE
 console.log("group 1: " + JSON.stringify(group));
 
@@ -77,7 +95,7 @@ path1.fillColor = 'black';
 group.addChild(path1);
 cObj.cannonPoint = vec1;
 cObj.cannonPath = path1;
-
+console.log("group.children - 2: " + group.children.length);
 
 function initCannonAngle(angle){
     if (angle == 'center'){  // center of the circle 
