@@ -7,6 +7,9 @@
 // 
 //      Cirkel placeres på canvas via mus (andet eksempel fra oven):
 //      http://paperjs.org/tutorials/project-items/transforming-items/
+// 
+//      SVG'er i paper.js:
+//      http://stackoverflow.com/questions/27031945/animating-path-segments-of-an-imported-svg-in-paper-js
 //
 //##############################################################################################################
 
@@ -20,6 +23,8 @@ JQ(document).ready(function() {
     JQ('#header').prepend(jsonData.header);
     JQ('#instruction').prepend(instruction(jsonData.instruction));  
     JQ('#explanation').prepend(explanation(jsonData.explanation));
+
+    // debugger;  // <------ Debugging in paper.js: http://stackoverflow.com/questions/24272396/console-access-of-paper-js-objects
 });
 
 // var cObj = {vecObj:{}, pathObj:{}};
@@ -27,10 +32,44 @@ var cObj = {};
 
 var group = new Group();
 
+
+// #########################################   TEST   #########################################
+console.log('importSVG - project 1: '+ JSON.stringify(project));
+// var a = project.importSVG("img/yin_yang.svg");  // SEE: https://gist.github.com/netpoetica/4481374
+// // var a = project.activeLayer.importSVG("img/yin_yang.svg");  
+// console.log("a 1: " + a);
+// var a = group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
+// console.log("a 2: " + a);
+// var a = new Raster("img/yin_yang.svg");  // VIRKER OK, men det behandles som .jpg, .png mm
+// console.log("a 3: " + a);
+var a = new Symbol(project.importSVG("img/yin_yang.svg")); 
+console.log("a 4: " + a);
+console.log('importSVG - project 2: '+ JSON.stringify(project)); 
+
+// var p = a.place();
+// p.position = new Point(40, 100);
+// p.scale(0.25 + Math.random() * 0.75);
+
+// console.log('importSVG - project.activeLayer.: '+JSON.stringify(project.activeLayer.firstChild));
+
+
+//project.activeLayer.remove();
+// var a = project.importSVG(document.getElementById('imgTest'));  // SEE: http://appsynergy.net/article/interactive-maps-with-paper-js
+// var a = new Symbol(paper.project.importSVG(document.getElementById('imgTest')));  // GIVER IKKE "eksisterer ikke" FEJL - SE: https://gist.github.com/netpoetica/4481375
+// var p = a.place();
+// a.position = new Point(40, 100);
+// a.scale(0.95 + Math.random() * 0.75);
+// ############################################################################################
+
+
 // Draw the the background disk:
 var myCircle = new Path.Circle(new Point(view.center), 300);
 myCircle.fillColor = 'green';
 group.addChild(myCircle);
+
+group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
+// var TmyCircle = new Path.importSVG("img/yin_yang.svg");  // VIRKER IKKE
+console.log("group 1: " + JSON.stringify(group));
 
 var vec1 = new Point(randPlusMinusOne()*212)*Point.random() + view.center;  // 212 because 212 ~ ((300^2)/2)^0.5 
 var path1 = new Path.Circle(vec1, 5);
@@ -224,6 +263,9 @@ tool.onKeyDown = function(event) {
         return false;
     }
 }
+
+
+console.log("group 2: " + JSON.stringify(group));
 
 
 function T(maxVd){
