@@ -27,7 +27,7 @@ JQ(document).ready(function() {
     // debugger;  // <------ Debugging in paper.js: http://stackoverflow.com/questions/24272396/console-access-of-paper-js-objects
 });
 
-// var cObj = {vecObj:{}, pathObj:{}};
+
 var cObj = {};
 
 var group = new Group();
@@ -42,8 +42,17 @@ console.log('importSVG - project 1: '+ JSON.stringify(project));
 // console.log("a 2: " + a);
 // var a = new Raster("img/yin_yang.svg");  // VIRKER OK, men det behandles som .jpg, .png mm
 // console.log("a 3: " + a);
-var a = new Symbol(project.importSVG("img/yin_yang.svg")); 
-console.log("a 4: " + a);
+// var a = new Symbol(project.importSVG("img/yin_yang.svg")); 
+// console.log("a 4: " + a);
+// var raster = new Raster({
+//     // source: 'http://assets.paperjs.org/images/marilyn.jpg',
+//     source: 'img/yin_yang.svg',
+//     position: view.center
+// }); 
+// // raster.insertAbove()
+// raster.insertAbove(group);
+// group.addChild(raster);
+// console.log("a 5: " + a);
 console.log('importSVG - project 2: '+ JSON.stringify(project)); 
 
 // var p = a.place();
@@ -62,16 +71,44 @@ console.log('importSVG - project 2: '+ JSON.stringify(project));
 // ############################################################################################
 
 
+
+var width = $("#testCanvas").width();
+var ratio = 600/1110;
+$("#testCanvas").height(ratio*width);
+$("#testCanvas").width(width);
+
+var height = $("#testCanvas").height();  // Get the new heigt
+var ratio = width/1110;                  // Redefine ratio for both X and Y axis, and therefore also for the scaled radius R, because R = r*ratio = ((x*ratio)^2 + (y*ratio)^2)^0.5 = ratio*((x)^2 + (y)^2)^0.5, where r = ((x)^2 + (y)^2)^0.5
+
+console.log('height: ' + height + ', width: ' + width + ', ratio: ' + ratio);
+
+
+view.viewSize = new Size(width, height);  // IMPORTANT: This fixes the ratio-issue between width and height in the imported picture using raster and the green circle. If not used the rotating circel gets stretched going from 0 to 90 degrees (eg. max x to max y) - see: http://stackoverflow.com/questions/19119931/how-to-set-the-view-viewsize-of-canvas-in-paper-js-with-bootstrap
+view.draw();
+console.log('view.center: ' + JSON.stringify(view.center));
+
+
 // Draw the the background disk:
-var myCircle = new Path.Circle(new Point(view.center), 300);
+var myCircle = new Path.Circle(new Point(view.center), 300*ratio);
 myCircle.fillColor = 'green';
 group.addChild(myCircle);
 
-group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
+
+var raster = new Raster({
+    // source: 'http://assets.paperjs.org/images/marilyn.jpg',
+    source: 'img/yin_yang.svg',
+    position: view.center
+}); 
+raster.scale(1.295*ratio);  // 1.295 is an empirical number fitting the dimentions of the imported image.
+group.addChild(raster);
+
+
+// group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
 // var TmyCircle = new Path.importSVG("img/yin_yang.svg");  // VIRKER IKKE
 console.log("group 1: " + JSON.stringify(group));
 
-var vec1 = new Point(randPlusMinusOne()*212)*Point.random() + view.center;  // 212 because 212 ~ ((300^2)/2)^0.5 
+var vec1 = new Point(randPlusMinusOne()*212*ratio)*Point.random() + view.center;  // "212*ratio" because 212*ratio ~ (((300*ratio)^2)/2)^0.5 
+// vec1 = vec1*ratio;    
 var path1 = new Path.Circle(vec1, 5);
 path1.fillColor = 'black';
 group.addChild(path1);
@@ -82,14 +119,14 @@ cObj.cannonPath = path1;
 function initCannonAngle(angle){
     if (angle == 'center'){  // center of the circle 
         var angleVec = view.center - cObj.cannonPoint;
-        var vec2 = new Point(212).rotate(angleVec.angle-45) + view.center;   // -45 degrees because Point(212) equals the vector (212, 212) which is at a -45 degree angle relative to (0,0) eg. the upper-left-corner.
+        var vec2 = new Point(212*ratio).rotate(angleVec.angle-45) + view.center;   // -45 degrees because Point(212*ratio) equals the vector (212*ratio, 212*ratio) which is at a -45 degree angle relative to (0,0) eg. the upper-left-corner.
         console.log('onMouseDown - vec - center: '+JSON.stringify(vec2));
     }
     if (angle == 'random'){
-        var vec2 = new Point(212).rotate(Math.round(360*Math.random())) + view.center;
+        var vec2 = new Point(212*ratio).rotate(Math.round(360*Math.random())) + view.center;
         console.log('onMouseDown - vec - random: '+JSON.stringify(vec2));
     }
-    
+    // vec2 = vec2*ratio;
     var path = new Path.Circle(vec2, 5);
     path.fillColor = 'blue';
     group.addChild(path);
@@ -119,7 +156,8 @@ function alterCannonAngle(angle){
     
     console.log('alterCannonAngle - cObj.angle: ' + cObj.angle + ', angle: ' + angle);
 
-    var vec2 = new Point(212).rotate(cObj.angle-45) + view.center;  // MARK (#1#) 
+    var vec2 = new Point(212*ratio).rotate(cObj.angle-45) + view.center;  // MARK (#1#) 
+    // vec2 = vec2*ratio;
     var path2 = new Path.Circle(vec2, 5);
     cObj.cannonAnglePath.remove();
     path2.fillColor = 'blue';
@@ -145,7 +183,8 @@ function cannonBallFlightPath(){
 
     console.log('fireCannon - cObj.angle: ' + cObj.angle);
 
-    var vec2 = new Point(212).rotate(cObj.angle-45) + view.center;  // MARK (#1#) 
+    var vec2 = new Point(212*ratio).rotate(cObj.angle-45) + view.center;  // MARK (#1#) 
+    // vec2 = vec2*ratio;
     var path2 = new Path.Circle(vec2, 5);
     cObj.cannonAnglePath.remove();
     // path2.fillColor = 'blue';
@@ -204,7 +243,8 @@ function randPlusMinusOne(){
 console.log('randPlusMinusOne: '+randPlusMinusOne());
 
 
-var vec3 = new Point(randPlusMinusOne()*212)*Point.random() + view.center;
+var vec3 = new Point(randPlusMinusOne()*212*ratio)*Point.random() + view.center;
+// vec3 = vec3*ratio;
 var path = new Path.Circle(vec3, 5);
 path.fillColor = 'red';
 group.addChild(path);
@@ -233,11 +273,29 @@ function onFrame(event) {
     moveCannonBall(1);
 }
 
+tool.onKeyUp = function(event) {
+    keyDownCount = 0;  // Reset count
+}
+
 tool.onKeyDown = function(event) {
+
+    if (typeof(keyDownCount)==='undefined'){
+        window.keyDownCount = 0;
+    } else {
+        ++keyDownCount;
+    }
+
     if (event.key == 'left') {  // 'enter', 'space', 'shift', 'control', 'alt', 'meta', 'caps-lock', 'left', 'up', 'right', 'down', 'escape', 'delete',.... - see: http://paperjs.org/reference/keyevent/#key
         console.log('onKeyDown - LEFT');
 
-        alterCannonAngle(1);
+        if (typeof(cannonBallFired)==='undefined'){  // This prevents alteration of the cannonball trajectory when the cannon has been fired!
+
+            if (keyDownCount < 10){   // If the user has been holding the key down for less than 10 "sussesive times", the movement of the aim of the cannon is finetuned and will only move 1 degree 
+                alterCannonAngle(1);  
+            } else {                  // ... else the aim of the cannon is not finetuned, and will move 5 degrees per "sussesive time" the key is hold down
+                alterCannonAngle(5);
+            }
+        }
 
         // Prevent the key event from bubbling
         return false;
@@ -246,7 +304,14 @@ tool.onKeyDown = function(event) {
     if (event.key == 'right') {  // 'enter', 'space', 'shift', 'control', 'alt', 'meta', 'caps-lock', 'left', 'up', 'right', 'down', 'escape', 'delete',.... - see: http://paperjs.org/reference/keyevent/#key
         console.log('onKeyDown - RIGHT');
 
-        alterCannonAngle(-1);
+        if (typeof(cannonBallFired)==='undefined'){  // This prevents alteration of the cannonball trajectory when the cannon has been fired!
+            
+            if (keyDownCount < 10){    // If the user has been holding the key down for less than 10 "sussesive times", the movement of the aim of the cannon is finetuned and will only move 1 degree 
+                alterCannonAngle(-1);
+            } else {
+                alterCannonAngle(-5);  // ... else the aim of the cannon is not finetuned, and will move 5 degrees per "sussesive time" the key is hold down
+            }
+        }
 
         // Prevent the key event from bubbling
         return false;
@@ -266,6 +331,7 @@ tool.onKeyDown = function(event) {
 
 
 console.log("group 2: " + JSON.stringify(group));
+console.log(project);
 
 
 function T(maxVd){
