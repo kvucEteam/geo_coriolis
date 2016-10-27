@@ -1,5 +1,4 @@
 
-// +46769439404
 
 //##############################################################################################################
 //
@@ -13,7 +12,6 @@
 //      http://stackoverflow.com/questions/27031945/animating-path-segments-of-an-imported-svg-in-paper-js
 //
 //##############################################################################################################
-
 
 var JQ = jQuery;
 
@@ -32,12 +30,46 @@ JQ(document).ready(function() {
 
 var cObj = {};
 
-cObj.imageName = 'img/plane.png';
-cObj.imgScale = 0.4;
-cObj.imgInitAngel = 90;
-
-
 var group = new Group();
+
+
+// #########################################   TEST   #########################################
+console.log('importSVG - project 1: '+ JSON.stringify(project));
+// var a = project.importSVG("img/yin_yang.svg");  // SEE: https://gist.github.com/netpoetica/4481374
+// // var a = project.activeLayer.importSVG("img/yin_yang.svg");  
+// console.log("a 1: " + a);
+// var a = group.importSVG("img/yin_yang.svg");  // VIRKER OK !!!
+// console.log("a 2: " + a);
+// var a = new Raster("img/yin_yang.svg");  // VIRKER OK, men det behandles som .jpg, .png mm
+// console.log("a 3: " + a);
+// var a = new Symbol(project.importSVG("img/yin_yang.svg")); 
+// console.log("a 4: " + a);
+// var raster = new Raster({
+//     // source: 'http://assets.paperjs.org/images/marilyn.jpg',
+//     source: 'img/yin_yang.svg',
+//     position: view.center
+// }); 
+// // raster.insertAbove()
+// raster.insertAbove(group);
+// group.addChild(raster);
+// console.log("a 5: " + a);
+console.log('importSVG - project 2: '+ JSON.stringify(project)); 
+
+// var p = a.place();
+// p.position = new Point(40, 100);
+// p.scale(0.25 + Math.random() * 0.75);
+
+// console.log('importSVG - project.activeLayer.: '+JSON.stringify(project.activeLayer.firstChild));
+
+
+//project.activeLayer.remove();
+// var a = project.importSVG(document.getElementById('imgTest'));  // SEE: http://appsynergy.net/article/interactive-maps-with-paper-js
+// var a = new Symbol(paper.project.importSVG(document.getElementById('imgTest')));  // GIVER IKKE "eksisterer ikke" FEJL - SE: https://gist.github.com/netpoetica/4481375
+// var p = a.place();
+// a.position = new Point(40, 100);
+// a.scale(0.95 + Math.random() * 0.75);
+// ############################################################################################
+
 
 
 var width = $("#testCanvas").width();
@@ -58,7 +90,7 @@ console.log('view.center: ' + JSON.stringify(view.center));
 
 // Draw the the background disk:
 var myCircle = new Path.Circle(new Point(view.center), 300*ratio);
-// myCircle.fillColor = 'green';    // <---------------------------------  IMPORTANT: The green background circle has 
+myCircle.fillColor = 'green';
 group.addChild(myCircle);
 
 
@@ -70,27 +102,13 @@ group.addChild(myCircle);
 // raster_yinyang.scale(1.295*ratio);  // 1.295 is an empirical number fitting the dimentions of the imported image.
 // group.addChild(raster_yinyang);
 
-
-var raster_northpole = new Raster({
-    // source: 'http://assets.paperjs.org/images/marilyn.jpg',
-    source: 'img/arktisnord.png',
-    position: view.center
-}); 
-raster_northpole.scale(1.385*ratio);  // 1.295 is an empirical number fitting the dimentions of the imported image.
-group.addChild(raster_northpole);
-
-
-var raster_flyingObject = new Raster({
-    source: 'img/plane.png'
-    // position: view.center
-}); 
-raster_flyingObject.scale(0.4*ratio);  // 1.295 is an empirical number fitting the dimentions of the imported image.
-// raster_flyingObject.position = view.center*0.5;  // NOT NEEDED!
-group.addChild(raster_flyingObject);
-
-
-// raster_flyingObject.applyMatrix = false; // SEE:  https://github.com/paperjs/paper.js/issues/458
-
+// var raster_plane = new Raster({
+//     source: 'img/plane.png'
+//     // position: view.center
+// }); 
+// raster_plane.scale(0.5*ratio);  // 1.295 is an empirical number fitting the dimentions of the imported image.
+// raster_plane.position = view.center*0.5;
+// group.addChild(raster_plane);
 
 // var raster_bird = new Raster({
 //     source: 'img/bird.png',
@@ -105,10 +123,7 @@ group.addChild(raster_flyingObject);
 console.log("group 1: " + JSON.stringify(group));
 
 var vec1 = new Point(randPlusMinusOne()*212*ratio)*Point.random() + view.center;  // "212*ratio" because 212*ratio ~ (((300*ratio)^2)/2)^0.5 
-
-raster_flyingObject.position = vec1;
-// group.addChild(raster_flyingObject);
-
+// vec1 = vec1*ratio;    
 var path1 = new Path.Circle(vec1, 5);
 path1.fillColor = 'black';
 group.addChild(path1);
@@ -119,7 +134,7 @@ cObj.cannonPath = path1;
 function initCannonAngle(angle){
     if (angle == 'center'){  // center of the circle 
         var angleVec = view.center - cObj.cannonPoint;
-        var vec2 = new Point(212*ratio).rotate(angleVec.angle-45) + view.center;   // -45 degrees because Point(212*ratio) equals the vector (212*ratio, 212*ratio) which is at a 45 degree angle relative to (0,0) eg. the upper-left-corner.
+        var vec2 = new Point(212*ratio).rotate(angleVec.angle-45) + view.center;   // -45 degrees because Point(212*ratio) equals the vector (212*ratio, 212*ratio) which is at a -45 degree angle relative to (0,0) eg. the upper-left-corner.
         console.log('onMouseDown - vec - center: '+JSON.stringify(vec2));
     }
     if (angle == 'random'){
@@ -139,103 +154,12 @@ function initCannonAngle(angle){
     path.dashArray = [10, 12];  // Makes the line dashed...
     group.addChild(path);
     cObj.cannonLinePath = path;
-
-    cObj.cannonBallFlightVector = cObj.cannonAnglePath.position - cObj.cannonPath.position;
-    raster_flyingObject.rotate(cObj.cannonBallFlightVector.angle + 90);
-    console.log('initCannonAngle - cObj.cannonBallFlightVector.angle: ' + cObj.cannonBallFlightVector.angle);
-
-    console.log('initCannonAngle - cObj.cannonLinePath: ' + JSON.stringify(cObj));
+    console.log('cannonAngle - cObj.cannonLinePath: ' + JSON.stringify(cObj));
 
 }
 
 initCannonAngle('random');
 // initCannonAngle('center');
-
-
-function calcFlyingObjectAngleStep(angle){
-    // // var angleVec = cObj.cannonAnglePath.position - cObj.cannonPath.position;  // This is wrong, since angleVec.angle gives the (correct) angel of angleVec, but Point(212) at MARK (#1#) below is relative to the center of the green spinning circle/the world.
-    // var angleVec = cObj.cannonAnglePath.position - view.center;                  // This is correct: we find the angle relative to the center of the green spinning circle/the world, and in MARK (#1#) below calculates the new vector relative to the center the world.
-    // console.log('alterCannonAngle - angleVec.angle: ' + angleVec.angle);
-    // var angleNew1 = angleVec.angle + angle;  // <-------------------------  IMPORTANT: Times one!!!
-    // var angleNew2 = angleVec.angle + angle*2;  // <-------------------------  IMPORTANT: Times two!!!
-    
-    // console.log('alterCannonAngle - cObj.angle: ' + cObj.angle + ', angle: ' + angle);
-
-    // var vec2 = new Point(212*ratio).rotate(angleNew1-45) + view.center;  // MARK (#1#) 
-    // var path2 = new Path.Circle(vec2, 5);
-
-    // var vec3 = new Point(212*ratio).rotate(angleNew2-45) + view.center;  // MARK (#1#) 
-    // var path3 = new Path.Circle(vec2, 5);
-
-    // var resAngel = vec2.angle-vec3.angle;
-    // console.log('calcFlyingObjectAngleStep - resAngel: ' + resAngel);
-
-    // return resAngel;
-
-}
-
-
-function calcWorldAngle(){
-    var sign = (cObj.earthRotationSpeed>0)?1:-1;
-    var d = cObj.angleCount*cObj.earthRotationSpeed/360;
-    var k = d - Math.floor(d);
-    var angle = k*sign*360;
-
-    console.log('calcWorldAngle - angle: ' + angle);
-
-    return angle;
-}
-
-
-function returnRasterIndex(imgName){
-    var child = paper.project._children[0]._children[0]._children;
-    console.log('returnRasterIndex - child: ' + JSON.stringify(child));
-    for (var n in child){
-        console.log('returnRasterIndex - child['+n+']: ' + JSON.stringify(child[n]));
-        var arr = JSON.parse(JSON.stringify(child[n]));
-        if (arr[0] == 'Raster'){
-            console.log('returnRasterIndex - arr[1].source: ' + arr[1].source);
-            if (arr[1].source.indexOf(imgName)!==-1){
-                console.log('returnRasterIndex - n: ' + n);
-                return n;
-            }
-        }
-    }
-}
-
-
-// IMPORTANT: 
-// item.rotate(V) takes an angle-increment (delta) as argument "V", and not the absolute angle relative to the x-axis. 
-// This means that you either have to find the angle-increment each time you press the "right" or "left" keys (this 
-// has proofed to be difficult to do) OR you need to reinitialize the raster image with the new absolute angle 
-// relative to the x-axis. The last stategy is used here.
-//
-// This technique does NOT work either (for absolute angle relative to the x-axis):
-//      // raster_flyingObject.applyMatrix = false; // SEE:  https://github.com/paperjs/paper.js/issues/458
-function creatNewFlyingObject(position){
-    raster_flyingObject.remove();
-    raster_flyingObject = new Raster({
-        source: cObj.imageName,
-        position: position
-    }); 
-    raster_flyingObject.scale(cObj.imgScale*ratio);
-
-    // raster_flyingObject.applyMatrix = false; // Does not work - SEE:  https://github.com/paperjs/paper.js/issues/458
-
-    // group.addChild(raster_flyingObject);  // This does NOT add the plane below the black dot.
-    raster_flyingObject.insertBelow(path1);  // This add the plane below the black dot.
-
-    cObj.cannonBallFlightVector_2 = cObj.cannonAnglePath.position - cObj.cannonPath.position;
-    if (typeof(cannonBallFired)==='undefined'){  
-        raster_flyingObject.rotate(cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel);
-    } else {
-        if (typeof(cObj.constantFlightAngle)==='undefined') {  // Define constantFlightAngle ONLY once...
-            cObj.constantFlightAngle = cObj.cannonBallFlightVector_2.angle;
-        }
-        console.log('creatNewFlyingObject - cObj.constantFlightAngle: ' + cObj.constantFlightAngle);
-        raster_flyingObject.rotate(cObj.constantFlightAngle + cObj.imgInitAngel);
-    }
-}
 
 
 function alterCannonAngle(angle){
@@ -262,24 +186,6 @@ function alterCannonAngle(angle){
     path.dashArray = [10, 12];  // Makes the line dashed...
     group.addChild(path);
     cObj.cannonLinePath = path;
-
-
-    // cObj.cannonBallFlightVector = cObj.cannonAnglePath.position - cObj.cannonPath.position;
-
-
-    // NEDENSTÅENDE VIRKER HVIS JORDEN IKKE ROTERE:
-    // cObj.angle_old = (typeof(cObj.angle_new)!=='undefined')? cObj.angle_new : cObj.cannonBallFlightVector.angle - angle;  // Ajust by subtracting the first angle if angle_new is not defined.
-    // cObj.angle_new = cObj.cannonBallFlightVector.angle; 
-    // cObj.angle_diff = cObj.angle_new - cObj.angle_old;
-    // raster_flyingObject.rotate(cObj.angle_diff);
-    // console.log('alterCannonAngle - angle_old: ' + cObj.angle_old + ', angle_new: ' + cObj.angle_new + ', angle_diff: ' + cObj.angle_diff);
-
-
-    creatNewFlyingObject(cObj.cannonPath.position);
-
-
-    console.log('PROJECT: ');
-    console.log(project);
 
 }
 
@@ -338,8 +244,6 @@ function moveCannonBall(speed){
         drawPath.strokeColor = 'black';
         group.addChild(drawPath);
 
-        // raster_flyingObject.position = vec;
-        creatNewFlyingObject(vec);
         
         if (directionVec.length >= cObj.cannonBallFlightLength){  // Condition to stop the cannonball from moving out of "the world"
             cannonBallFired = false;
@@ -361,41 +265,27 @@ path.fillColor = 'red';
 group.addChild(path);
 
 
-// DETTE VIRKER MEN SKAL IKKE BRUGES:
-// function onMouseDown(event) {
-//     var vec = view.center - event.point;
-//     console.log('onMouseDown - vec: '+JSON.stringify(vec));
-//     if (vec.length <= 300-5){ // If the point is inside the rotating disk:
-//         // Create a new circle shaped path at the position
-//         // of the mouse:
-//         var path = new Path.Circle(event.point, 5);
-//         path.fillColor = 'black';
+function onMouseDown(event) {
+    var vec = view.center - event.point;
+    console.log('onMouseDown - vec: '+JSON.stringify(vec));
+    if (vec.length <= 300-5){ // If the point is inside the rotating disk:
+        // Create a new circle shaped path at the position
+        // of the mouse:
+        var path = new Path.Circle(event.point, 5);
+        path.fillColor = 'black';
 
-//         // Add the path to the group's children list:
-//         group.addChild(path);
+        // Add the path to the group's children list:
+        group.addChild(path);
 
-//     }
-// }
-
+    }
+}
 
 function onFrame(event) {
-
-    cObj.earthRotationSpeed = -0.1;
-    // cObj.earthRotationSpeed = -0.5;
+    // Rotate the group by 1 degree from
+    // the centerpoint of the view:
+    group.rotate(-0.1, view.center);
     
-    group.rotate(cObj.earthRotationSpeed, view.center);  // Rotate the group by earthRotationSpeed from the centerpoint of the view each frame:
-
     moveCannonBall(1);
-
-    cObj.angleCount = event.count; 
-
-    // cObj.angel_t = Math.atan(Math.tan(cObj.angleCount*cObj.earthRotationSpeed*Math.PI/180))*180/Math.PI;
-    // console.log('onFrame - angel_t: ' + cObj.angel_t);
-
-
-    // cObj.cannonBallFlightVector = cObj.cannonAnglePath.position - cObj.cannonPath.position;
-    // console.log('onFrame - cannonBallFlightVector.angel: ' + cObj.cannonBallFlightVector.angel);
-
 }
 
 tool.onKeyUp = function(event) {
@@ -445,13 +335,9 @@ tool.onKeyDown = function(event) {
     if (event.key == 'space') {  // 'enter', 'space', 'shift', 'control', 'alt', 'meta', 'caps-lock', 'left', 'up', 'right', 'down', 'escape', 'delete',.... - see: http://paperjs.org/reference/keyevent/#key
         console.log('onKeyDown - SPACE');
 
-            
-        if (typeof(cannonBallFired)==='undefined'){  // This prevents alteration of the cannonball trajectory when the cannon has been fired!
+        window.cannonBallFired = true;
 
-            window.cannonBallFired = true;
-
-            cannonBallFlightPath();
-        }
+        cannonBallFlightPath();
 
         // Prevent the key event from bubbling
         return false;
@@ -459,25 +345,8 @@ tool.onKeyDown = function(event) {
 }
 
 
-//######################################
-//                 TEST
-//######################################
-
-
 console.log("group 2: " + JSON.stringify(group));
 console.log(project);
 
-console.log('project.activeLayer: ' + JSON.stringify(project.activeLayer));
-
-console.log("returnRasterIndex: " + returnRasterIndex('plane'));
 
 
-calcWorldAngle(-45);
-calcWorldAngle(-90);
-calcWorldAngle(-135);
-calcWorldAngle(-180);
-calcWorldAngle(-225);
-calcWorldAngle(-270);
-calcWorldAngle(-315);
-calcWorldAngle(-360);
-calcWorldAngle(-360*1.5);
