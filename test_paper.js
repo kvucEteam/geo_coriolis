@@ -27,6 +27,8 @@ JQ(document).ready(function() {
     JQ('#explanation').prepend(explanation(jsonData.explanation));
 
     // debugger;  // <------ Debugging in paper.js: http://stackoverflow.com/questions/24272396/console-access-of-paper-js-objects
+
+    rotateCheck();  // "Rotate you screen" message!
 });
 
 
@@ -35,6 +37,9 @@ var cObj = {};
 cObj.imageName = 'img/plane.png';
 cObj.imgScale = 0.4;
 cObj.imgInitAngel = 90;
+
+
+var blackDot;
 
 
 var group = new Group();
@@ -114,6 +119,14 @@ path1.fillColor = 'black';
 group.addChild(path1);
 cObj.cannonPoint = vec1;
 cObj.cannonPath = path1;
+
+blackDot = cObj.cannonPath;
+
+
+// This function prevents initialization of a point (plane and its distanation) in the water.
+function findPointOnLand(){
+
+}
 
 
 function initCannonAngle(angle){
@@ -333,6 +346,7 @@ function moveCannonBall(speed){
         var path = new Path.Circle(vec, 5);  // The moving cannonball
         path.strokeColor = 'black';
         cObj.cannonBallFlightPath = path;
+        blackDot = path;
 
         var drawPath = new Path.Circle(vec, 0.5);  // The traced out path of the cannonball 
         drawPath.strokeColor = 'black';
@@ -360,6 +374,9 @@ var path = new Path.Circle(vec3, 5);
 path.fillColor = 'red';
 group.addChild(path);
 
+var redDot = path;
+
+
 
 // DETTE VIRKER MEN SKAL IKKE BRUGES:
 // function onMouseDown(event) {
@@ -378,6 +395,20 @@ group.addChild(path);
 // }
 
 
+function customHitTest(point1, point2, minDistance){
+    var currentDistance = Math.pow( Math.pow(point2.position.x - point1.position.x, 2) + Math.pow(point2.position.y - point1.position.y, 2), 0.5);
+
+    // console.log('customHitTest - currentDistance: '+ currentDistance + ', minDistance: ' + minDistance);
+
+    if ((currentDistance <= minDistance) || (typeof(targetHit)!=='undefined')){
+        window.targetHit = true;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 function onFrame(event) {
 
     cObj.earthRotationSpeed = -0.1;
@@ -385,9 +416,17 @@ function onFrame(event) {
     
     group.rotate(cObj.earthRotationSpeed, view.center);  // Rotate the group by earthRotationSpeed from the centerpoint of the view each frame:
 
-    moveCannonBall(1);
+    // moveCannonBall(1);
 
     cObj.angleCount = event.count; 
+
+    // console.log('Collision: ' + redDot.hitTest(blackDot, hitOptions));
+    // console.log('Collision: ' + customHitTest(blackDot, redDot, 50));
+
+    // NOTE: ratio varies between 0.48 and 1 - ratio = 0.48 is the smallest width before rotateCheck() shows "Vend din skærm": 
+    if (customHitTest(blackDot, redDot, 10*ratio) == false){
+        moveCannonBall(1);
+    }
 
     // cObj.angel_t = Math.atan(Math.tan(cObj.angleCount*cObj.earthRotationSpeed*Math.PI/180))*180/Math.PI;
     // console.log('onFrame - angel_t: ' + cObj.angel_t);
