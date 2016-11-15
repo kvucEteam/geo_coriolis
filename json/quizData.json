@@ -1,5 +1,34 @@
 {
 	"header" : "Coriolis effekten",
-	"instruction" : "Kursist instruktion...",
-	"explanation" : "Ram den røde prik ved at trykkke på piletasterne 'right' og 'left' for at flytte den stiplede sigtelinje. Tryk på 'mellemrum'/'space' for at skyde. For at prøve igen skal man p.t. reloade objektet."
+	"instruction" : "Flyv til den røde prik ved at flytte på den stiplede sigtelinje via tryk på piletasterne eller <span class='glyphicon glyphicon-chevron-left'></span> og <span class='glyphicon glyphicon-chevron-right'></span>. Tryk på 'mellemrum' eller 'flyv' for at flyve.",
+	"explanation" : "Formålet med øvelsen er se betydningen af corioliseffekten på både den nordlige og den sydlige halvkugle. I øvelsen er bevægelse over jordoverfladen illustreret med et fly, men corioliseffekten har også betydning for bevægelsen af alt andet, der ikke er direkte bundet til jordoverfladen, f.eks. også luft- og vandmasser",
+	"memObj": {  
+        "reset": false, 
+        "attempt": 0, 
+        "attemptMax": 3,
+        "earthRotationSpeed": -0.1, 
+        "cannonBallSpeed": 1,
+        "notes": "minDist and maxDist are the distance interval where all start- and stop-points of the flight will be choosen. All points in the location array are relative to center of the rotating disk/world.",
+        "minDist": 150,
+        "maxDist": 1000,
+        "location": [
+            {"point": {"x": 0, "y": 0}, "name": "Northpole"},
+            {"point": {"x": 30, "y": 215}, "name": "København"},
+            {"point": {"x": -5, "y": 235}, "name": "Heathrow"},
+            {"point": {"x": 80, "y": -190}, "name": "Kamchatka"}, 
+            {"point": {"x": 140, "y": 170}, "name": "Moskva"},
+            {"point": {"x": 285, "y": 90}, "name": "Xizang (Tibet)"},
+            {"point": {"x": 300, "y": -10}, "name": "Gobi ørkenen"},
+            {"point": {"x": 200, "y": -200}, "name": "Tokyo"}, 
+            {"point": {"x": 200, "y": -10}, "name": "Sibirien"},
+            {"point": {"x": -50, "y": -130}, "name": "Alaska"},
+            {"point": {"x": -210, "y": 70}, "name": "Qubec"},
+            {"point": {"x": -150, "y": -50}, "name": "Canada"},
+            {"point": {"x": -150, "y": -130}, "name": "Washington"},
+            {"point": {"x": -230, "y": -130}, "name": "Arizona"},
+            {"point": {"x": -270, "y": -100}, "name": "Mexico"},
+            {"point": {"x": -120, "y": 100}, "name": "Nuuk"},
+            {"point": {"x": -285, "y": 45}, "name": "Florida"}
+        ]
+	}
 }

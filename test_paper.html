@@ -19,22 +19,48 @@
             <div id="explanation"></div>
             <div class="Clear"></div>
 <!-- 
+            <span class="btn btn-info" id="tryAgain">Prøv igen</span>
+
+            <div class="Clear"></div>
+ -->            
+
             <div id="canvasOverlay">
-                <span class="canvasBtn btn btn btn-primary" type="button">GO</span>
+                <div id="overlayControls">
+                    
+                    <span class="canvasBtn btn btn btn-primary floatRight canvasControl_go" type="button">Flyv</span>
+                    <span class="canvasBtn canvasControl canvasControl_right floatRight" >
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    </span>
+                    <span class="canvasBtn canvasControl canvasControl_left floatLeft">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    </span>
+                    <div class="Clear"></div>
+                </div>
             </div>
- -->
+
             <canvas id="testCanvas"> 
                 
             </canvas>
+
+            <div class="Clear"></div>
+<!-- 
+            <span class="btn btn-info" id="tryAgain">Prøv igen</span> <span class="btn btn-info" id="reload">reload</span>
+ -->
             
+            
+             
 
         </div>
         <div class="Clear"></div>
     </div>
     <script src="../library/vendor_scripts.js"></script>
     <script src="../library/custom_scripts.js"></script>
+
+    <script type="text/javascript">
+        getAjaxData("GET", "json/quizData.json", false, "json");
+    </script>
     
-    <script type="text/javascript" src="dist/paper-full.js"></script>
+    <script type="text/javascript" src="dist/paper-full.js"></script> 
     
     <script type="text/paperscript" src="test_paper.js" canvas="testCanvas">
         
