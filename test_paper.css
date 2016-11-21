@@ -60,7 +60,7 @@
 }
 
 .canvasControl_left{
-	margin-left: 20px;
+	margin-right: 20px;
 }
 .canvasControl_right{
 	margin-right: 20px;
@@ -70,11 +70,17 @@
 	bottom: 0px;
 }
 .smallView > .canvasControl_left{
-	margin-right: 10px;
+	margin-left: 10px;
 }
 .smallView > .canvasControl_right{
 	margin-right: 10px;
 }
 .smallView > .canvasControl_go{
 	margin-right: 10px;
+}
+.hemisphere{
+	color: #000;
+	position: relative;
+	top: 10px;
+	left: 15px;
 }

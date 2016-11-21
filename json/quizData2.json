@@ -1,0 +1,26 @@
+{
+	"header" : "Corioliseffekten - den sydlige halvkugle",
+	"instruction" : "Flyv til destinationen (den røde prik) ved at flytte på den stiplede sigtelinje. Du kan bruge tastaturets piletaster <span class='glyphicon glyphicon-chevron-left'></span> og <span class='glyphicon glyphicon-chevron-right'></span> eller knapperne. Tryk på 'mellemrum' eller knappen 'flyv' for at lette.",
+	"explanation" : "Formålet med øvelsen er at se betydningen af corioliseffekten - på både den nordlige og den sydlige halvkugle. Bevægelse over jordoverfladen er her illustreret med et fly, men corioliseffekten har også betydning for bevægelsen af alt andet, der ikke er direkte bundet til jordoverfladen, f.eks. luft- og vandmasser",
+	"hemisphere" : "img/antarktissyd.png",
+	"memObj": {  
+        "reset": false, 
+        "attempt": 0, 
+        "attemptMax": 3,
+        "earthRotationSpeed": 0.1, 
+        "cannonBallSpeed": 1,
+        "notes": "minDist and maxDist are the distance interval where all start- and stop-points of the flight will be choosen. All points in the location array are relative to center of the rotating disk/world.",
+        "minDist": 200,
+        "maxDist": 1000,
+        "location": [
+            {"point": {"x": 0, "y": 0}, "name": "Sydpolen"},
+            {"point": {"x": -170, "y": -110}, "name": "Crystal Hill"},
+            {"point": {"x": 20, "y": 175}, "name": "Dugdale Glacier"},
+            {"point": {"x": 170, "y": -25}, "name": "Queen Mary coast"},
+            {"point": {"x": 140, "y": 230}, "name": "Victoria (Austalien)"},
+            {"point": {"x": 240, "y": 130}, "name": "Geographe Bay (Austalien)"},
+            {"point": {"x": 100, "y": -260}, "name": "Cape Town (Sydafrika)"},
+            {"point": {"x": -260, "y": -90}, "name": "Santiago (Agentina)"}
+        ]
+	}
+}

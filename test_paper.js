@@ -17,6 +17,17 @@
 
 // https://packagecontrol.io/packages/Comment-Snippets
 
+//############################################################################################################## 
+//                                      15-11-2016 - Problemer på telefon:
+//##############################################################################################################
+// 
+// (1) Når man trykker på "<" eller ">", så sår registrere objektet ikke at man løfter fingeren fra "<" eller ">" - hvilket gåt at flvet heletiden rotere.
+//
+// (2) Developer mode på oneplus two giver følgende fejl når objektet loader:
+//          Handling of 'touchstart' input event was delayed for 2147483647 ms due to main thread being busy. Consider marking event handler as 'passive' to make the page more responive.
+//
+//     Google-søgning på problemet giver følegde forklaring om "Passive Event Listeners":
+//          http://stackoverflow.com/questions/39152877/consider-marking-event-handler-as-passive-to-make-the-page-more-responive
 
 
 var memObj = jsonData.memObj;  // Object that keeps track of the black and red dot (e.g. start and stop position) between each student tries (while reset=false), until the treset is set to true.
@@ -209,10 +220,12 @@ function detectBootstrapBreakpoints(){
 function setBootstrapRules(){
     console.log('setBootstrapRules - bootstrapBreakpointSize: ' + bootstrapBreakpointSize + ', bootstrapcolObj['+bootstrapcolObj[bootstrapBreakpointSize]+']: ' + bootstrapcolObj[bootstrapBreakpointSize] + ', bootstrapcolObj["sm"]: ' + bootstrapcolObj['sm']);
     if (bootstrapcolObj[bootstrapBreakpointSize] <= bootstrapcolObj['sm']){
-        $('.canvasControl_left').removeClass('floatLeft').addClass('floatRight');
+        // $('.canvasControl_left').removeClass('floatLeft').addClass('floatRight');
+        $('.canvasControl_left').removeClass('floatRight').addClass('floatLeft');
         $('#overlayControls').addClass('smallView');
     } else {
-        $('.canvasControl_left').removeClass('floatRight').addClass('floatLeft');
+        // $('.canvasControl_left').removeClass('floatRight').addClass('floatLeft');
+        $('.canvasControl_left').removeClass('floatLeft').addClass('floatRight');
         $('#overlayControls').removeClass('smallView');
     }
 }
@@ -698,7 +711,7 @@ function onFrame(event) {
     // console.log('Collision: ' + customHitTest(blackDot, redDot, 50));
 
     // NOTE: ratio varies between 0.48 and 1 - ratio = 0.48 is the smallest width before rotateCheck() shows "Vend din skærm": 
-    if (customHitTest(blackDot, redDot, 10*ratio) == false){
+    if (customHitTest(blackDot, redDot, 20*ratio) == false){
         moveCannonBall(1);
     } else {
         if (typeof(cObj.flyingObjectAtDestination)==='undefined'){ 
@@ -1051,6 +1064,7 @@ function main(){
     
     // vec3 = vec3*ratio;
     // var path = new Path.Circle(vec3, 5);
+    // window.path = new Path.Circle(vec3, 20);  // <---- the actual size of the hitzone. 
     window.path = new Path.Circle(vec3, 5);
     // path.fillColor = 'red';  
     path.fillColor = '#e26060';

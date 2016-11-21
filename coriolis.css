@@ -1,7 +1,93 @@
-#myCanvas {
+#testCanvas {
+	/*position: absolute;*/
+	position: relative;
+	z-index: 0;
     width: 100%;
     height: 600px;
-    background-color: #87CEEB;
- 
+    /*background-color: #87CEEB;*/
+    background-color: #221821; 
+}
+#canvasOverlay{
+	position: absolute;
+	z-index: 1;
+	height: 600px;
+	width: 100%;
+	/*padding-top: 48%*/
+}
+#overlayControls{
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	bottom: 20px;
+}
+.overlayControls .canvasBtn{
 
+}
+#tryAgain{
+	position: relative;
+	margin-top: 10px;
+}
+
+.canvasControl {
+    /*background-color: #111;*/
+    background-color: #FFF;
+    border-radius: 30px;
+    /*color: #fff;*/
+    color: #111;
+    display: inline-block;
+    font-size: 20px;
+    height: 40px;
+    line-height: 30px;
+    opacity: 0.7;
+    padding: 5px;
+    text-align: center;
+    width: 40px;
+    margin-top: -3px;
+}
+.canvasControl_go{
+	/*margin-right: 0px;*/
+	/*margin-left: 10px */
+}
+.floatLeft{
+	float: left;
+}
+.floatRight{
+	float: right;
+}
+
+.glyphicon-chevron-left{  /* Justering af visuel skævhed */
+	margin-top: 4px;
+}
+
+.canvasControl_left{
+	margin-right: 20px;
+}
+.canvasControl_right{
+	margin-right: 20px;
+}
+
+#overlayControls.smallView{
+	bottom: 0px;
+}
+.smallView > .canvasControl_left{
+	margin-left: 10px;
+}
+.smallView > .canvasControl_right{
+	margin-right: 10px;
+}
+.smallView > .canvasControl_go{
+	margin-right: 10px;
+}
+.northeren_hemisphere{
+	color: #000;
+	position: relative;
+	top: 10px;
+	left: 15px;
+}
+
+.southeren_hemisphere{
+	color: #000;
+	position: relative;
+	top: 10px;
+	left: 15px;
 }
