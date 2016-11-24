@@ -90,7 +90,7 @@ JQ(document).on('click', ".canvasControl_go", function(event) { // This is neede
 /*----------  Check om det er mobil device)----------*/
 
 if (jQuery.browser.mobile ==true) {
-
+    
     //================   Event litserners for pressing "left"  ================
 
     JQ(document).on(' touchend', ".canvasControl_left", function(event) {
