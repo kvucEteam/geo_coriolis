@@ -133,8 +133,6 @@ if (jQuery.browser.mobile ==true) {
 } else {
 
 
-
-
     //================   Event litserners for pressing "left"  ================
 
     JQ(document).on('mouseup', ".canvasControl_left", function(event) {
@@ -185,12 +183,12 @@ if (jQuery.browser.mobile ==true) {
         tool.onKeyDown(event);
     });
 
-
+}
     //##############################################################################################################
     //                  FUNCTIONS
     //##############################################################################################################
 
-}
+
 
 function shuffelArray(ItemArray) {
     var NumOfItems = ItemArray.length;
@@ -631,7 +629,9 @@ function moveCannonBall(speed) {
                 if (memObj.attempt < memObj.attemptMax) {
                     var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen).  <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
                 } else {
-                    var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen). <br><br> <b>Prøv at ramme den grønne prik denne gang.</b> <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+                    // Prøv at ramme den grønne prik denne gang.
+                    // Du kan flyve til destinationen ved at sigte på den grønne prik. 
+                    var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen). <br><br> <b>Du kan flyve til destinationen ved at sigte på den grønne prik.</b> <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
                 }
                 UserMsgBox("body", '<h3>Du fløj<span class="label label-danger">forkert!</span></h3><p>' + HTML + '</p>');
 
