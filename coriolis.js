@@ -957,6 +957,38 @@ function df(x) {
 newton(f, df, 3);
 
 
+// The hint the student gets after 3 failed attempts is based on a "principal of expanding circles", and is calculated by 
+// equating the following two equations and solving with respect to the time (t):
+//
+//      (1)     r_a(t) = v_a*t    
+//      (2)     r_a(t) = ((x_a - x_b(t))^2 + (y_a - y_b(t))^2)^0.5
+// 
+//      - where:
+//              subscript "a" designates the starting point (black dot)
+//              subscript "b" designates the destination point (red dot), and:
+//      (3)             x_b(t) = r*cos(Ø(t)) + x_c
+//                      y_b(t) = r*sin(Ø(t)) + y_c
+//                      Ø(t) = w*t + Øo
+//                      
+// Explanation of symbols:
+//      r is the radius of the traced out circle of the red dot moving around 
+//      r_a(t) is the travled distance (radius) of the the plane at time t
+//      v_a is the velocity of the plane
+//      x_a is the x-position of the starting point (black dot)
+//      y_a is the y-position of the starting point (black dot)
+//      x_b is the x-position of the destination (red dot)
+//      y_b is the y-position of the destination (red dot)      
+//      x_c is the x-position of the center of the rotating disk/the world
+//      y_c is the y-position of the center of the rotating disk/the world
+//      Ø(t) angle of the destination (red dot) as a function of time
+//      Øo is the starting angle of the destination (red dot)
+//      w is the angular velocity of the rotating disk/the world
+//      
+// Since equating equation (1) and (2) yelds an equation that can not be solved analytically, Newtons method is deployed to 
+// find a numerical solution of the the travel time t, which is needed for the plane to fly from the black dot to the future position 
+// of the red dot. The calculated travel time t is used to calculate the position of the green dot (which is the destination of the red 
+// dot at the future time t), by simply using equations (3).
+// 
 function calcHintAngle() {
     var r = distance(memObj.redDot, view.center); // The radius of the rotated circle of the destination (redDot). 
     var xa = memObj.blackDot.x; // x-position of the flying object
