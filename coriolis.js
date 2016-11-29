@@ -626,12 +626,23 @@ function moveCannonBall(speed) {
 
                 var ekstraHTML = '<br><br> Forsøg nr ' + memObj.attempt + ' af ' + memObj.attemptMax + ' før du får lidt hjælp.';
 
+                console.log('moveCannonBall - earthRotationSpeed: ' + cObj.earthRotationSpeed);
+
                 if (memObj.attempt < memObj.attemptMax) {
-                    var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen).  <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+
+                    if (jsonData.memObj.earthRotationSpeed < 0) {   // If earthRotationSpeed < 0, then "we" are on the northern hemisphere.
+                        var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen).  <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+                    } else {                            // If earthRotationSpeed > 0, then "we" are on the southern hemisphere.
+                        var HTML = 'På den sydlige halvkugle afbøjes bevægelser over jordoverfladen til venstre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til højre for det røde punkt (set i flyveretningen).  <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+                    }
+
                 } else {
-                    // Prøv at ramme den grønne prik denne gang.
-                    // Du kan flyve til destinationen ved at sigte på den grønne prik. 
-                    var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen). <br><br> <b>Du kan flyve til destinationen ved at sigte på den grønne prik.</b> <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+
+                    if (jsonData.memObj.earthRotationSpeed < 0) {   // If earthRotationSpeed < 0, then "we" are on the northern hemisphere.
+                        var HTML = 'På den nordlige halvkugle afbøjes bevægelser over jordoverfladen til højre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til venstre for det røde punkt (set i flyveretningen). <br><br> <b>Du kan flyve til destinationen ved at sigte på den grønne prik.</b> <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+                    } else {                            // If earthRotationSpeed > 0, then "we" are on the southern hemisphere.
+                        var HTML = 'På den sydlige halvkugle afbøjes bevægelser over jordoverfladen til venstre. Dette sker på grund af corioliseffekten. For at opveje denne effekt skal du altså sigte til højre for det røde punkt (set i flyveretningen). <br><br> <b>Du kan flyve til destinationen ved at sigte på den grønne prik.</b> <br> <span id="tryAgain" class="btn btn-info">Klik for at prøve igen</span>';
+                    }
                 }
                 UserMsgBox("body", '<h3>Du fløj<span class="label label-danger">forkert!</span></h3><p>' + HTML + '</p>');
 
