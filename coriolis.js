@@ -476,7 +476,9 @@ function creatNewFlyingObject(position) {
     cObj.cannonBallFlightVector_2 = cObj.cannonAnglePath.position - cObj.cannonPath.position;
 
     if (typeof(cObj.oldAngle) === 'undefined') {
-        cObj.oldAngle = cObj.worldAngle + cObj.cannonBallFlightVector_2.angle + 90;
+        // cObj.oldAngle = cObj.worldAngle + cObj.cannonBallFlightVector_2.angle + 90;              // Commented out 29-11-2016
+        // cObj.oldAngle = cObj.worldAngle + cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel;  // Added 29-11-2016
+        cObj.oldAngle = cObj.worldAngle + cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel;  // Added 29-11-2016
     }
 
     // cObj.cannonBallFlightVector_2 = cObj.cannonAnglePath.position - cObj.cannonPath.position;
@@ -484,7 +486,7 @@ function creatNewFlyingObject(position) {
         // raster_flyingObject.rotate(cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel);
 
         cObj.newAngle = cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel;
-        raster_flyingObject.rotate(cObj.worldAngle - cObj.oldAngle + cObj.newAngle);
+        raster_flyingObject.rotate(cObj.worldAngle - cObj.oldAngle + cObj.newAngle);   // cObj.worldAngle - cObj.oldAngle + cObj.newAngle  =  cObj.worldAngle - (cObj.worldAngle + cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel) + (cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel)  =  cObj.worldAngle - cObj.worldAngle - cObj.cannonBallFlightVector_2.angle - cObj.imgInitAngel + cObj.cannonBallFlightVector_2.angle + cObj.imgInitAngel  =  0;
         cObj.oldAngle = cObj.newAngle;
     } else {
         if (typeof(cObj.constantFlightAngle) === 'undefined') { // Define constantFlightAngle ONLY once...
@@ -1117,8 +1119,8 @@ function main() {
     memObj.blackDot = vec1;
 
 
-    initCannonAngle('random');
-    // initCannonAngle('center');
+    // initCannonAngle('random');   // Commented out 29-11-2016. The random generated angle has two drawbacks: (1) There is a discrepancy/error in the first frame when the plane is turned: the dotted black aiming-line and the plane does not follow each other. If the plane is near the egde of the rotating disk AND the black dotted amining-line is near the same egde, then the error of the first frame-of-turning becomes large. (2) If we have the situation described in (1) then the student will not be able to see the black dotted amining-line from the start - which might be confusing.
+    initCannonAngle('center');      // Added 29-11-2016.  By always initializing the dotted black aiming-line through the center of the rotating disk, the two drawback above are (partially) resolved. The error mentioned in drawback (1) is only partially resolved since the error is not eliminated, but only made smaller. 
 
 
     if ((typeof(memObj.redDot) === 'undefined') ||  (memObj.reset)) {
