@@ -47,6 +47,7 @@
 .canvasControl_go{
 	/*margin-right: 0px;*/
 	/*margin-left: 10px */
+	cursor: pointer;
 }
 .floatLeft{
 	float: left;
@@ -61,9 +62,11 @@
 
 .canvasControl_left{
 	margin-right: 20px;
+	cursor: pointer;
 }
 .canvasControl_right{
 	margin-right: 20px;
+	cursor: pointer;
 }
 
 #overlayControls.smallView{
